@@ -1,0 +1,19 @@
+{
+  "name": "ScanNuGet",
+  "version": "1.0.0",
+  "description": "Scan NuGet Dependencies",
+  "main": "app.js",
+  "dependencies": {
+    "archy": "^1.0.0",
+    "async": "^0.9.0",
+    "colors": "^1.1.0",
+    "lodash": "^3.8.0",
+    "xml2js": "^0.4.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paolo Zacchi",
+  "license": "ISC"
+}
