@@ -2,11 +2,32 @@
   "name": "ScanNuGet",
   "version": "1.0.0",
   "description": "Scan NuGet Dependencies",
+  "homepage": "https://github.com/Zax/scanNuGet",
   "main": "app.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "scanNuGet": "app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zax/scanNuGet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zax/ren4plex/issues"
+  },
+  "keywords": [
+    "NuGet",
+    "scan",
+    "dependencies"
+  ],
   "dependencies": {
     "archy": "^1.0.0",
     "async": "^0.9.0",
     "colors": "^1.1.0",
+    "commander": "^2.8.1",
     "lodash": "^3.8.0",
     "xml2js": "^0.4.8"
   },
@@ -14,6 +35,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Paolo Zacchi",
+  "author": "ZaX",
   "license": "ISC"
 }

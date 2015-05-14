@@ -1,13 +1,13 @@
-// filesystem
+// require
 var fs = require('fs');
 var pt = require('path');
-// parser xml -> json
+var program = require('commander');
 var xml2js = require('xml2js');
-// utility su stringhe/collezioni
 var _ = require('lodash');
 var colors = require('colors/safe');
 var archy = require('archy');
 var async = require('async');
+var package = require('./package.json');
 
 function parseDir(path, cb) {
 
@@ -45,8 +45,6 @@ function parseDir(path, cb) {
             });
     });
 }
-
-// parsa il file xml e restituisce l'array di dipendenze 
 function parsePackageFile(file, cb) {
     fs.readFile(file, 'utf8', function (err, data) {
         if (err) return cb(err);
@@ -62,17 +60,28 @@ function parsePackageFile(file, cb) {
     });
 }
 
-parseDir('C:\\Progetti\\SinTel\\Sviluppo2013\\AreaComune\\Piattaforma', function(err, data){
-    if (data) return;
+program
+    .version(package.version, '-v, --version')
+    .option('-p, --packages', 'Sort by packages')
+    .usage('[options] [dir]')
+    .parse(process.argv);
+
+var path = program.args[0] ? program.args[0] : '.';
+
+console.log('scan ' + colors.yellow('"' + path + '"') + ' and sub-directories...');
+parseDir(path, function(err, data){
     var results = { label: 'NuGet Packages', nodes: [] };
-    // group by id
-    _.forEach(_.groupBy(_.sortByAll(data, ['id', 'version']), 'id'), function(library, key) {
-        // group by version
-        var nodes = _.reduce(_.groupBy(library, 'version'), function(result, value, key) {
-            result.push({ label: key, nodes: _.map(value, function(n) { return n.file; }) });
-            return result;
-        }, []);
-        results.nodes.push({ label: key, nodes: nodes });
-    });
+    if (data){
+        // group by id
+        _.forEach(_.groupBy(_.sortByAll(data, ['id', 'version']), 'id'), function(library, key) {
+            // group by version
+            var nodes = _.reduce(_.groupBy(library, 'version'), function(result, value, key) {
+                result.push({ label: key, nodes: _.map(value, function(n) { return n.file; }) });
+                return result;
+            }, []);
+            results.nodes.push({ label: key, nodes: nodes });
+        });
+    }
     console.log(archy(results));
 });
+
